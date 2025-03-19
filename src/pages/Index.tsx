@@ -128,8 +128,10 @@ const Index = () => {
   };
 
   const openYoutubeVideo = (videoId) => {
-    window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
-    toast.success('Opening YouTube video in a new tab');
+    if (videoId) {
+      window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
+      toast.success('Opening YouTube video in a new tab');
+    }
   };
 
   return (
@@ -232,12 +234,20 @@ const Index = () => {
 
         <section id="video" className="section video-section">
           <h2 className="section-title">Cooking Videos</h2>
-          <div className="video-container clickable" onClick={() => openYoutubeVideo('V1n5bfJqzIU')}>
+          <div 
+            className="video-container" 
+            onClick={() => openYoutubeVideo('V1n5bfJqzIU')}
+          >
             <div className="video-overlay">
-              <span className="play-icon">▶</span>
-              <span className="watch-text">Watch on YouTube</span>
+              <div className="play-icon">▶</div>
+              <div className="watch-text">Watch on YouTube</div>
             </div>
-            <iframe src="https://www.youtube.com/embed/V1n5bfJqzIU" frameBorder="0" allowFullScreen title="Cooking video"></iframe>
+            <iframe 
+              src="https://www.youtube.com/embed/V1n5bfJqzIU?controls=0" 
+              frameBorder="0" 
+              title="Cooking video"
+              allowFullScreen
+            ></iframe>
           </div>
         </section>
 
