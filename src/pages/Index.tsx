@@ -1,6 +1,6 @@
-
 import React, { useState } from 'react';
 import '../styles/Index.css';
+import { toast } from 'sonner';
 
 const Index = () => {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
@@ -11,6 +11,7 @@ const Index = () => {
       name: "Spaghetti Carbonara",
       image: "https://images.pexels.com/photos/1527603/pexels-photo-1527603.jpeg",
       description: "A creamy pasta dish with eggs, cheese, pancetta, and pepper.",
+      badge: "Italian",
       ingredients: ["400g spaghetti", "200g pancetta", "4 large eggs", "100g Parmesan cheese", "Freshly ground black pepper", "Salt"],
       instructions: [
         "Cook spaghetti according to package instructions until al dente.",
@@ -28,6 +29,7 @@ const Index = () => {
       name: "Grilled Chicken with Herbs",
       image: "https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg",
       description: "Tender chicken marinated in fresh herbs and grilled to perfection.",
+      badge: "Healthy",
       ingredients: ["4 chicken breasts", "3 tbsp olive oil", "2 garlic cloves, minced", "1 tbsp fresh rosemary, chopped", "1 tbsp fresh thyme, chopped", "1 lemon, juiced", "Salt and pepper to taste"],
       instructions: [
         "In a bowl, mix olive oil, garlic, herbs, lemon juice, salt, and pepper.",
@@ -43,6 +45,7 @@ const Index = () => {
       name: "Chocolate Lava Cake",
       image: "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg",
       description: "Rich chocolate cake with a molten chocolate center.",
+      badge: "Dessert",
       ingredients: ["200g dark chocolate", "120g unsalted butter", "3 eggs", "3 egg yolks", "100g sugar", "40g flour", "Cocoa powder for dusting", "Vanilla ice cream (optional)"],
       instructions: [
         "Preheat oven to 400°F. Butter and dust 6 ramekins with cocoa powder.",
@@ -53,6 +56,55 @@ const Index = () => {
         "Bake for 12-14 minutes until edges are firm but center is soft.",
         "Let cool for 1 minute, then invert onto serving plates.",
         "Serve immediately with vanilla ice cream if desired."
+      ]
+    },
+    {
+      id: 4,
+      name: "Thai Green Curry",
+      image: "https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg",
+      description: "Aromatic Thai curry with coconut milk, vegetables, and your choice of protein.",
+      badge: "Spicy",
+      ingredients: ["400ml coconut milk", "3 tbsp green curry paste", "500g chicken or tofu", "1 red bell pepper, sliced", "1 zucchini, sliced", "Handful of Thai basil", "2 tbsp fish sauce", "1 tbsp palm sugar", "2 kaffir lime leaves"],
+      instructions: [
+        "Heat a little oil in a large pan over medium heat.",
+        "Add curry paste and cook for 1 minute until fragrant.",
+        "Add coconut milk and bring to a simmer.",
+        "Add chicken or tofu and simmer for 10 minutes.",
+        "Add vegetables and continue cooking for 5 minutes.",
+        "Stir in fish sauce, palm sugar, and lime leaves.",
+        "Garnish with Thai basil before serving.",
+        "Serve with steamed jasmine rice."
+      ]
+    },
+    {
+      id: 5,
+      name: "Greek Salad",
+      image: "https://images.pexels.com/photos/1211887/pexels-photo-1211887.jpeg",
+      description: "Fresh Mediterranean salad with tomatoes, cucumber, olives, and feta cheese.",
+      badge: "Vegetarian",
+      ingredients: ["4 large tomatoes, chopped", "1 cucumber, diced", "1 red onion, thinly sliced", "200g feta cheese, cubed", "100g kalamata olives", "2 tbsp extra virgin olive oil", "1 tbsp red wine vinegar", "1 tsp dried oregano", "Salt and pepper to taste"],
+      instructions: [
+        "Combine tomatoes, cucumber, and red onion in a large bowl.",
+        "Add olives and feta cheese.",
+        "In a small bowl, whisk together olive oil, vinegar, oregano, salt, and pepper.",
+        "Pour dressing over the salad and gently toss.",
+        "Let sit for 10 minutes to allow flavors to meld before serving."
+      ]
+    },
+    {
+      id: 6,
+      name: "Beef Tacos",
+      image: "https://images.pexels.com/photos/2092897/pexels-photo-2092897.jpeg",
+      description: "Flavorful ground beef tacos with fresh toppings and homemade salsa.",
+      badge: "Mexican",
+      ingredients: ["500g ground beef", "1 onion, diced", "2 garlic cloves, minced", "2 tbsp taco seasoning", "8 taco shells", "Lettuce, shredded", "Tomatoes, diced", "Cheddar cheese, grated", "Sour cream", "Avocado, sliced", "Fresh cilantro"],
+      instructions: [
+        "Brown ground beef and onion in a skillet over medium heat.",
+        "Add garlic and cook for 1 minute until fragrant.",
+        "Stir in taco seasoning and 1/4 cup water.",
+        "Simmer for 5 minutes until sauce thickens.",
+        "Warm taco shells according to package instructions.",
+        "Fill shells with beef mixture and top with lettuce, tomatoes, cheese, sour cream, avocado, and cilantro."
       ]
     }
   ];
@@ -67,6 +119,7 @@ const Index = () => {
   const openRecipe = (recipe) => {
     setSelectedRecipe(recipe);
     document.body.classList.add('recipe-open');
+    toast.success(`Showing recipe for ${recipe.name}`);
   };
 
   const closeRecipe = () => {
@@ -144,6 +197,7 @@ const Index = () => {
               <div key={item.id} className="food-item" onClick={() => openRecipe(item)}>
                 <div className="food-item-image">
                   <img src={item.image} alt={item.name} />
+                  {item.badge && <span className="food-item-badge">{item.badge}</span>}
                 </div>
                 <h3 className="food-item-name">{item.name}</h3>
                 <p className="food-item-description">{item.description}</p>
