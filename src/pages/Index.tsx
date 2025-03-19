@@ -1,13 +1,77 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/Index.css';
 
 const Index = () => {
-  const scrollToSection = (id: string) => {
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  
+  const foodItems = [
+    {
+      id: 1,
+      name: "Spaghetti Carbonara",
+      image: "https://images.pexels.com/photos/1527603/pexels-photo-1527603.jpeg",
+      description: "A creamy pasta dish with eggs, cheese, pancetta, and pepper.",
+      ingredients: ["400g spaghetti", "200g pancetta", "4 large eggs", "100g Parmesan cheese", "Freshly ground black pepper", "Salt"],
+      instructions: [
+        "Cook spaghetti according to package instructions until al dente.",
+        "While pasta is cooking, fry pancetta in a large pan until crispy.",
+        "In a bowl, whisk eggs and grated Parmesan together.",
+        "Once pasta is cooked, reserve 1/2 cup of pasta water and drain.",
+        "Working quickly, add hot pasta to the pancetta pan, remove from heat.",
+        "Add the egg mixture, tossing constantly with tongs until creamy.",
+        "Add pasta water as needed to achieve desired consistency.",
+        "Season with freshly ground black pepper and serve immediately."
+      ]
+    },
+    {
+      id: 2,
+      name: "Grilled Chicken with Herbs",
+      image: "https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg",
+      description: "Tender chicken marinated in fresh herbs and grilled to perfection.",
+      ingredients: ["4 chicken breasts", "3 tbsp olive oil", "2 garlic cloves, minced", "1 tbsp fresh rosemary, chopped", "1 tbsp fresh thyme, chopped", "1 lemon, juiced", "Salt and pepper to taste"],
+      instructions: [
+        "In a bowl, mix olive oil, garlic, herbs, lemon juice, salt, and pepper.",
+        "Place chicken in a ziplock bag and pour marinade over it.",
+        "Seal and refrigerate for at least 2 hours, or overnight for best results.",
+        "Preheat grill to medium-high heat.",
+        "Grill chicken for 6-7 minutes per side until internal temperature reaches 165°F.",
+        "Let rest for 5 minutes before serving."
+      ]
+    },
+    {
+      id: 3,
+      name: "Chocolate Lava Cake",
+      image: "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg",
+      description: "Rich chocolate cake with a molten chocolate center.",
+      ingredients: ["200g dark chocolate", "120g unsalted butter", "3 eggs", "3 egg yolks", "100g sugar", "40g flour", "Cocoa powder for dusting", "Vanilla ice cream (optional)"],
+      instructions: [
+        "Preheat oven to 400°F. Butter and dust 6 ramekins with cocoa powder.",
+        "Melt chocolate and butter together in a double boiler.",
+        "In a separate bowl, whisk eggs, egg yolks, and sugar until pale.",
+        "Fold chocolate mixture into egg mixture, then fold in flour.",
+        "Fill ramekins 3/4 full with batter.",
+        "Bake for 12-14 minutes until edges are firm but center is soft.",
+        "Let cool for 1 minute, then invert onto serving plates.",
+        "Serve immediately with vanilla ice cream if desired."
+      ]
+    }
+  ];
+
+  const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const openRecipe = (recipe) => {
+    setSelectedRecipe(recipe);
+    document.body.classList.add('recipe-open');
+  };
+
+  const closeRecipe = () => {
+    setSelectedRecipe(null);
+    document.body.classList.remove('recipe-open');
   };
 
   return (
@@ -28,16 +92,16 @@ const Index = () => {
             }}>About</a>
           </li>
           <li>
+            <a href="#food-items" onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('food-items');
+            }}>Food Items</a>
+          </li>
+          <li>
             <a href="#gallery" onClick={(e) => {
               e.preventDefault();
               scrollToSection('gallery');
             }}>Gallery</a>
-          </li>
-          <li>
-            <a href="#recipes" onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('recipes');
-            }}>Recipes</a>
           </li>
           <li>
             <a href="#video" onClick={(e) => {
@@ -58,10 +122,10 @@ const Index = () => {
         <header id="home" className="header">
           <h1>Welcome to Delicious Bites</h1>
           <p className="header-subtitle">Discover mouth-watering recipes, food inspiration, and cooking tips.</p>
-          <a href="#recipes" className="btn header-btn" onClick={(e) => {
+          <a href="#food-items" className="btn header-btn" onClick={(e) => {
             e.preventDefault();
-            scrollToSection('recipes');
-          }}>Explore More</a>
+            scrollToSection('food-items');
+          }}>View Food Items</a>
         </header>
 
         <section id="about" className="section about-section">
@@ -69,6 +133,23 @@ const Index = () => {
           <div className="about-content">
             <p>We share delicious recipes and cooking tips to make every meal special. Our team of chefs and food enthusiasts curate the best recipes from around the world to bring joy to your kitchen and delight to your table.</p>
             <p>Delicious Bites was founded with a simple mission: to make cooking enjoyable, accessible, and rewarding for everyone regardless of skill level.</p>
+          </div>
+        </section>
+
+        <section id="food-items" className="section food-items-section">
+          <h2 className="section-title">Food Items</h2>
+          <p className="section-description">Click on any food item to view its recipe</p>
+          <div className="food-items-grid">
+            {foodItems.map((item) => (
+              <div key={item.id} className="food-item" onClick={() => openRecipe(item)}>
+                <div className="food-item-image">
+                  <img src={item.image} alt={item.name} />
+                </div>
+                <h3 className="food-item-name">{item.name}</h3>
+                <p className="food-item-description">{item.description}</p>
+                <button className="btn recipe-btn">View Recipe</button>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -86,27 +167,6 @@ const Index = () => {
             </div>
             <div className="gallery-item">
               <img src="https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg" alt="Cooking Process" />
-            </div>
-          </div>
-        </section>
-
-        <section id="recipes" className="section recipes-section">
-          <h2 className="section-title">Recipes</h2>
-          <div className="recipe-cards">
-            <div className="recipe-card">
-              <h3>Spaghetti Carbonara</h3>
-              <p>A creamy pasta dish with eggs, cheese, pancetta, and pepper.</p>
-              <a href="#" className="btn recipe-btn">View Recipe</a>
-            </div>
-            <div className="recipe-card">
-              <h3>Grilled Chicken with Herbs</h3>
-              <p>Tender chicken marinated in fresh herbs and grilled to perfection.</p>
-              <a href="#" className="btn recipe-btn">View Recipe</a>
-            </div>
-            <div className="recipe-card">
-              <h3>Chocolate Lava Cake</h3>
-              <p>Rich chocolate cake with a molten chocolate center.</p>
-              <a href="#" className="btn recipe-btn">View Recipe</a>
             </div>
           </div>
         </section>
@@ -136,6 +196,36 @@ const Index = () => {
           <p>&copy; 2025 Delicious Bites. All rights reserved.</p>
         </footer>
       </main>
+
+      {selectedRecipe && (
+        <div className="recipe-modal">
+          <div className="recipe-modal-content">
+            <button className="recipe-close-btn" onClick={closeRecipe}>×</button>
+            <div className="recipe-modal-header">
+              <h2>{selectedRecipe.name}</h2>
+              <img src={selectedRecipe.image} alt={selectedRecipe.name} />
+            </div>
+            <div className="recipe-modal-body">
+              <div className="recipe-ingredients">
+                <h3>Ingredients</h3>
+                <ul>
+                  {selectedRecipe.ingredients.map((ingredient, index) => (
+                    <li key={index}>{ingredient}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="recipe-instructions">
+                <h3>Instructions</h3>
+                <ol>
+                  {selectedRecipe.instructions.map((step, index) => (
+                    <li key={index}>{step}</li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
