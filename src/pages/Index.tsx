@@ -127,6 +127,11 @@ const Index = () => {
     document.body.classList.remove('recipe-open');
   };
 
+  const openYoutubeVideo = (videoId) => {
+    window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
+    toast.success('Opening YouTube video in a new tab');
+  };
+
   return (
     <div className="site-wrapper">
       <nav className="side-nav">
@@ -227,7 +232,11 @@ const Index = () => {
 
         <section id="video" className="section video-section">
           <h2 className="section-title">Cooking Videos</h2>
-          <div className="video-container">
+          <div className="video-container clickable" onClick={() => openYoutubeVideo('V1n5bfJqzIU')}>
+            <div className="video-overlay">
+              <span className="play-icon">▶</span>
+              <span className="watch-text">Watch on YouTube</span>
+            </div>
             <iframe src="https://www.youtube.com/embed/V1n5bfJqzIU" frameBorder="0" allowFullScreen title="Cooking video"></iframe>
           </div>
         </section>
